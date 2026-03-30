@@ -2,12 +2,12 @@
 
 set -e
 
-VERSION=0
+VERSION=1
 MINOR=0
-PATCH=2
-EXTRAVERSION=""
+PATCH=
+EXTRAVERSION="-rc1"
 NOTES="(tests)"
-BRANCH="main"
+BRANCH="dev"
 
 if [[ -z $PATCH ]]; then
     PATCH=""

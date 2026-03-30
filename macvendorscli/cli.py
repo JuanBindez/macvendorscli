@@ -1,6 +1,11 @@
 import argparse
 from macvendorscli import MacVendors
 from macvendorscli.version import __version__
+from macvendorscli.exceptions import (
+    MacVendorsError,
+    VendorNotFoundError,
+    APIRequestError,
+)
 
 
 def main():
@@ -19,10 +24,20 @@ def main():
     args = parser.parse_args()
 
     client = MacVendors()
-    results = client.get_vendors(args.macs)
 
-    for mac, vendor in results.items():
-        print(f"{mac} -> {vendor}")
+    for mac in args.macs:
+        try:
+            vendor = client.get_vendor(mac)
+            print(f"{mac} -> {vendor}")
+
+        except VendorNotFoundError:
+            print(f"{mac} -> Vendor not found")
+
+        except APIRequestError as e:
+            print(f"{mac} -> API error: {e}")
+
+        except MacVendorsError as e:
+            print(f"{mac} -> Error: {e}")
 
 
 if __name__ == "__main__":

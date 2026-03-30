@@ -6,3 +6,8 @@ __js_url__ = None
 
 from macvendorscli.version import __version__
 from macvendorscli.__main__ import MacVendors
+from macvendorscli.exceptions import (
+    MacVendorsError,
+    VendorNotFoundError,
+    APIRequestError,
+)

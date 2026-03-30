@@ -4,7 +4,7 @@ set -e
 
 VERSION=0
 MINOR=0
-PATCH=1
+PATCH=2
 EXTRAVERSION=""
 NOTES="(tests)"
 BRANCH="main"

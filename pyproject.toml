@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=67.4.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "macvendorscli"
+version = "0.0.1"
+authors = [
+  { name="Juan Bindez", email="juanbindez780@gmail.com" },
+]
+description = "CLI and Python library to lookup MAC address vendors using the macvendors API."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "GPLv2 license" }
+
+keywords = [
+  "mac address",
+  "network",
+  "vendor lookup",
+  "cli",
+  "network tools",
+  "macvendors",
+  "oui",
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Internet",
+  "Topic :: System :: Networking",
+  "Topic :: Utilities",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+  "requests"
+]
+
+[project.urls]
+Homepage = "https://github.com/juanbindez/macvendorscli"
+"Bug Reports" = "https://github.com/juanbindez/macvendorscli/issues"
+
+[project.scripts]
+macvendorscli = "macvendorscli.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["macvendorscli*"]
+
+[tool.setuptools]
+license-files = ["LICENSE"]

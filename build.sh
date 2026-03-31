@@ -3,10 +3,13 @@
 set -e
 
 VERSION=1
-MINOR=0
+MINOR=1
 PATCH=0
 EXTRAVERSION=""
-NOTES="(Now everything runs locally on the IEEE oui database.)"
+NOTES="(docs: update project description
+
+Replace reference to MacVendors API with IEEE OUI database,
+reflecting the new fully offline implementation.)"
 BRANCH="main"
 
 if [[ -z $PATCH ]]; then

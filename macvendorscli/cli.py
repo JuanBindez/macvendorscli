@@ -11,7 +11,7 @@ def main():
     print(f"macvendorscli v{__version__}\n")
 
     parser = argparse.ArgumentParser(
-        description="CLI tool to lookup MAC address vendors using the MacVendors API"
+        description="CLI tool and Python3 library for offline MAC address vendor lookup using the IEEE OUI database."
     )
 
     parser.add_argument(

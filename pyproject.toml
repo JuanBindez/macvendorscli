@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "macvendorscli"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
   { name="Juan Bindez", email="juanbindez780@gmail.com" },
 ]
-description = "CLI and Python library to lookup MAC address vendors using the macvendors API."
+description = "CLI tool and Python3 library for offline MAC address vendor lookup using the IEEE OUI database."
 readme = "README.md"
 requires-python = ">=3.7"
 license = { text = "GPLv2 license" }

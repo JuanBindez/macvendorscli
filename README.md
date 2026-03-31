@@ -5,7 +5,7 @@
 [![GitHub Tag](https://img.shields.io/github/v/tag/JuanBindez/macvendorscli?include_prereleases)](https://github.com/JuanBindez/macvendorscli/releases)
 [![PyPI - Version](https://img.shields.io/pypi/v/macvendorscli)](https://pypi.org/project/macvendorscli/)
 
-## CLI and Python library to lookup MAC address vendors using the macvendors API.
+## CLI tool and Python3 library for offline MAC address vendor lookup using the IEEE OUI database.
 
 ## Install
     pip install macvendorscli

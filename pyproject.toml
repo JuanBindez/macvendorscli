@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "macvendorscli"
-version = "1.0-rc1"
+version = "1.0-rc2"
 authors = [
   { name="Juan Bindez", email="juanbindez780@gmail.com" },
 ]
@@ -42,9 +42,6 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
-dependencies = [
-  "requests"
-]
 
 [project.urls]
 Homepage = "https://github.com/juanbindez/macvendorscli"

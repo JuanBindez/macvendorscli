@@ -9,5 +9,4 @@ from macvendorscli.__main__ import MacVendors
 from macvendorscli.exceptions import (
     MacVendorsError,
     VendorNotFoundError,
-    APIRequestError,
 )

@@ -5,7 +5,3 @@ class MacVendorsError(Exception):
 class VendorNotFoundError(MacVendorsError):
     """Raised when a MAC address vendor is not found."""
     pass
-
-class APIRequestError(MacVendorsError):
-    """Raised when an HTTP or connection error occurs."""
-    pass

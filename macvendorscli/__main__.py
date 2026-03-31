@@ -1,29 +1,16 @@
-import requests
-import time
 import csv
 import os
-from typing import List, Dict, Optional
+from typing import List, Dict
 
-from macvendorscli.exceptions import (
-    VendorNotFoundError,
-    APIRequestError,
-)
+from macvendorscli.exceptions import VendorNotFoundError
 
 
 class MacVendors:
-    BASE_URL = "https://api.macvendors.com"
+    """
+    Offline MAC address vendor lookup using IEEE OUI database.
+    """
 
-    def __init__(
-        self,
-        timeout: int = 5,
-        rate_limit: float = 1.0,
-    ) -> None:
-        """
-        :param timeout: HTTP timeout
-        :param rate_limit: delay between API requests
-        """
-        self.timeout = timeout
-        self.rate_limit = rate_limit
+    def __init__(self) -> None:
         self.oui_db = self._load_oui()
 
     def _load_oui(self) -> Dict[str, str]:
@@ -35,7 +22,7 @@ class MacVendors:
         path = os.path.join(os.path.dirname(__file__), "oui.csv")
 
         if not os.path.exists(path):
-            return db  # não quebra a lib se não existir
+            raise RuntimeError("OUI database file (oui.csv) not found in package")
 
         try:
             with open(path, newline="", encoding="utf-8") as f:
@@ -53,64 +40,51 @@ class MacVendors:
                     if prefix and vendor:
                         db[prefix.upper()] = vendor.strip()
 
-        except Exception:
-            return {}
+        except Exception as e:
+            raise RuntimeError(f"Failed to load OUI database: {e}") from e
 
         return db
 
     def _normalize_mac(self, mac: str) -> str:
+        """
+        Normalize MAC address to uppercase without separators.
+        """
         return mac.replace(":", "").replace("-", "").upper()
 
     def _get_oui_prefix(self, mac: str) -> str:
-        return self._normalize_mac(mac)[:6]
-
-    def get_vendor_offline(self, mac: str) -> Optional[str]:
         """
-        Lookup vendor using local OUI database.
+        Extract OUI prefix (first 6 hex characters).
         """
-        if not self.oui_db:
-            return None
+        normalized = self._normalize_mac(mac)
 
-        prefix = self._get_oui_prefix(mac)
-        return self.oui_db.get(prefix)
+        if len(normalized) < 6:
+            raise ValueError(f"Invalid MAC address: {mac}")
 
-    def get_vendor_online(self, mac: str) -> str:
-        """
-        Lookup vendor using MacVendors API.
-        """
-        try:
-            url = f"{self.BASE_URL}/{mac}"
-            response = requests.get(url, timeout=self.timeout)
-
-            if response.status_code == 200:
-                time.sleep(self.rate_limit)
-                return response.text.strip()
-
-            elif response.status_code == 404:
-                raise VendorNotFoundError(f"Vendor not found for MAC: {mac}")
-
-            else:
-                raise APIRequestError(
-                    f"HTTP error {response.status_code} for MAC: {mac}"
-                )
-
-        except requests.RequestException as e:
-            raise APIRequestError(f"Connection error: {e}") from e
+        return normalized[:6]
 
     def get_vendor(self, mac: str) -> str:
         """
-        Try offline first, fallback to API.
+        Get vendor for a single MAC address.
+
+        :param mac: MAC address (e.g. 00:1A:2B:3C:4D:5E)
+        :return: Vendor name
+        :raises VendorNotFoundError: if vendor is not found
         """
-        vendor = self.get_vendor_offline(mac)
+        prefix = self._get_oui_prefix(mac)
 
-        if vendor:
-            return vendor
+        vendor = self.oui_db.get(prefix)
 
-        return self.get_vendor_online(mac)
+        if not vendor:
+            raise VendorNotFoundError(f"Vendor not found for MAC: {mac}")
+
+        return vendor
 
     def get_vendors(self, mac_list: List[str]) -> Dict[str, str]:
         """
-        Lookup multiple MAC addresses.
+        Get vendors for multiple MAC addresses.
+
+        :param mac_list: list of MAC addresses
+        :return: dict mapping MAC -> vendor or error message
         """
         results: Dict[str, str] = {}
 
@@ -121,3 +95,9 @@ class MacVendors:
                 results[mac] = str(e)
 
         return results
+
+    def __call__(self, mac: str) -> str:
+        """
+        Allow instance to be called like a function.
+        """
+        return self.get_vendor(mac)

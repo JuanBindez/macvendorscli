@@ -4,7 +4,6 @@ from macvendorscli.version import __version__
 from macvendorscli.exceptions import (
     MacVendorsError,
     VendorNotFoundError,
-    APIRequestError,
 )
 
 
@@ -32,9 +31,6 @@ def main():
 
         except VendorNotFoundError:
             print(f"{mac} -> Vendor not found")
-
-        except APIRequestError as e:
-            print(f"{mac} -> API error: {e}")
 
         except MacVendorsError as e:
             print(f"{mac} -> Error: {e}")

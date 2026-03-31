@@ -5,8 +5,8 @@ set -e
 VERSION=1
 MINOR=0
 PATCH=
-EXTRAVERSION="-rc1"
-NOTES="(tests)"
+EXTRAVERSION="-rc2"
+NOTES="(Now everything runs locally on the IEEE oui database.)"
 BRANCH="dev"
 
 if [[ -z $PATCH ]]; then

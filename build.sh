@@ -4,10 +4,10 @@ set -e
 
 VERSION=1
 MINOR=0
-PATCH=
-EXTRAVERSION="-rc2"
+PATCH=0
+EXTRAVERSION=""
 NOTES="(Now everything runs locally on the IEEE oui database.)"
-BRANCH="dev"
+BRANCH="main"
 
 if [[ -z $PATCH ]]; then
     PATCH=""

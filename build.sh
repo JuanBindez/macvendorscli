@@ -4,12 +4,14 @@ set -e
 
 VERSION=1
 MINOR=1
-PATCH=0
+PATCH=1
 EXTRAVERSION=""
-NOTES="(docs: update project description
+NOTES="(Update: IEEE OUI database
 
-Replace reference to MacVendors API with IEEE OUI database,
-reflecting the new fully offline implementation.)"
+The oui.csv file has been updated.
+
+The official database is available at https://standards-oui.ieee.org/oui/oui.csv
+"
 BRANCH="main"
 
 if [[ -z $PATCH ]]; then
@@ -30,7 +32,7 @@ else
 fi
 
 git add .
-git commit -m "$FULL_VERSION $NOTES"
+git commit -s -m "$FULL_VERSION $NOTES"
 git push -u origin $BRANCH
 git tag v$FULL_VERSION
 git push --tags
